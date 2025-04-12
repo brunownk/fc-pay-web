@@ -1,44 +1,37 @@
-import Link from "next/link";
-import { cookies } from "next/headers";
-import { ArrowLeft, Download } from "lucide-react";
+import { cookies } from 'next/headers';
+import Link from 'next/link';
 
-import { StatusBadge } from "@/components/StatusBadge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { ArrowLeft, Download } from 'lucide-react';
+
+import { StatusBadge } from '@/components/StatusBadge';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 
 export async function getInvoice(id: string) {
   const cookiesStore = await cookies();
-  const apiKey = cookiesStore.get("apiKey")?.value;
+  const apiKey = cookiesStore.get('apiKey')?.value;
   const response = await fetch(`http://localhost:8080/invoice/${id}`, {
     headers: {
-      "X-API-Key": apiKey as string,
+      'X-API-Key': apiKey as string,
     },
     cache: 'force-cache',
     next: {
-      tags: [`accounts/${apiKey}/invoices/${id}`]
-    }
+      tags: [`accounts/${apiKey}/invoices/${id}`],
+    },
   });
   return response.json();
 }
 
-export default async function InvoiceDetailsPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function InvoiceDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const invoiceData = await getInvoice(id);
 
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Button
-          variant="ghost"
-          className="text-gray-400 hover:text-white"
-          asChild
-        >
+        <Button variant="ghost" className="text-gray-400 hover:text-white" asChild>
           <Link href="/invoices">
-            <ArrowLeft className="h-4 w-4 mr-2" />
+            <ArrowLeft className="mr-2 h-4 w-4" />
             Voltar
           </Link>
         </Button>
@@ -53,67 +46,55 @@ export default async function InvoiceDetailsPage({
           </p>
         </div>
 
-        <Button variant="outline" className="bg-[#2a3749] border-gray-700">
-          <Download className="h-4 w-4 mr-2" />
+        <Button variant="outline" className="border-gray-700 bg-[#2a3749]">
+          <Download className="mr-2 h-4 w-4" />
           Download PDF
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="bg-[#1e293b] border-gray-800 p-6">
-          <h2 className="text-xl font-semibold text-white mb-4">
-            Informações da Fatura
-          </h2>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <Card className="border-gray-800 bg-[#1e293b] p-6">
+          <h2 className="mb-4 text-xl font-semibold text-white">Informações da Fatura</h2>
 
           <div className="space-y-4">
             <div className="flex justify-between border-b border-gray-800 pb-2">
               <span className="text-gray-400">ID da Fatura</span>
-              <span className="text-white font-medium">{invoiceData.id}</span>
+              <span className="font-medium text-white">{invoiceData.id}</span>
             </div>
 
             <div className="flex justify-between border-b border-gray-800 pb-2">
               <span className="text-gray-400">Valor</span>
-              <span className="text-white font-medium">
-                {invoiceData.amount}
-              </span>
+              <span className="font-medium text-white">{invoiceData.amount}</span>
             </div>
 
             <div className="flex justify-between border-b border-gray-800 pb-2">
               <span className="text-gray-400">Data de Criação</span>
-              <span className="text-white font-medium">
+              <span className="font-medium text-white">
                 {new Date(invoiceData.created_at).toLocaleDateString()}
               </span>
             </div>
 
             <div className="flex justify-between pb-2">
               <span className="text-gray-400">Descrição</span>
-              <span className="text-white font-medium">
-                {invoiceData.description}
-              </span>
+              <span className="font-medium text-white">{invoiceData.description}</span>
             </div>
           </div>
         </Card>
 
-        <Card className="bg-[#1e293b] border-gray-800 p-6">
-          <h2 className="text-xl font-semibold text-white mb-4">
-            Método de Pagamento
-          </h2>
+        <Card className="border-gray-800 bg-[#1e293b] p-6">
+          <h2 className="mb-4 text-xl font-semibold text-white">Método de Pagamento</h2>
 
           <div className="space-y-4">
             <div className="flex justify-between border-b border-gray-800 pb-2">
               <span className="text-gray-400">Tipo</span>
-              <span className="text-white font-medium">
-                {invoiceData.payment_type === "credit_card"
-                  ? "Cartão de crédito"
-                  : "Boleto"}
+              <span className="font-medium text-white">
+                {invoiceData.payment_type === 'credit_card' ? 'Cartão de crédito' : 'Boleto'}
               </span>
             </div>
 
             <div className="flex justify-between border-b border-gray-800 pb-2">
               <span className="text-gray-400">Últimos Dígitos</span>
-              <span className="text-white font-medium">
-                {invoiceData.card_last_digits}
-              </span>
+              <span className="font-medium text-white">{invoiceData.card_last_digits}</span>
             </div>
           </div>
         </Card>

@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { CreditCard } from "lucide-react";
+import { CreditCard } from 'lucide-react';
 
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
-import { createInvoiceAction } from "./create-invoice-action";
+import { createInvoiceAction } from './create-invoice-action';
 
 export function InvoiceForm() {
   return (
     <form action={createInvoiceAction}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <div className="space-y-6">
           <div className="space-y-2">
-            <label htmlFor="amount" className="text-gray-300 block">
+            <label htmlFor="amount" className="block text-gray-300">
               Valor (R$)
             </label>
 
@@ -26,12 +26,12 @@ export function InvoiceForm() {
               min={0}
               defaultValue={0.01}
               placeholder="0,00"
-              className="bg-[#2a3749] border-gray-700 text-white placeholder-gray-400"
+              className="border-gray-700 bg-[#2a3749] text-white placeholder-gray-400"
             />
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="description" className="text-gray-300 block">
+            <label htmlFor="description" className="block text-gray-300">
               Descrição
             </label>
 
@@ -39,20 +39,18 @@ export function InvoiceForm() {
               id="description"
               name="description"
               placeholder="Descreva o motivo do pagamento"
-              defaultValue={"Pagamento de fatura"}
-              className="bg-[#2a3749] border-gray-700 min-h-[120px] text-white placeholder-gray-400"
+              defaultValue={'Pagamento de fatura'}
+              className="min-h-[120px] border-gray-700 bg-[#2a3749] text-white placeholder-gray-400"
             />
           </div>
         </div>
 
-        <div className="bg-[#232f43] rounded-lg p-6">
-          <h2 className="text-xl font-semibold text-white mb-4">
-            Dados do Cartão
-          </h2>
+        <div className="rounded-lg bg-[#232f43] p-6">
+          <h2 className="mb-4 text-xl font-semibold text-white">Dados do Cartão</h2>
 
           <div className="space-y-4">
             <div className="space-y-2">
-              <label htmlFor="cardNumber" className="text-gray-300 block">
+              <label htmlFor="cardNumber" className="block text-gray-300">
                 Número do Cartão
               </label>
 
@@ -61,32 +59,32 @@ export function InvoiceForm() {
                   id="cardNumber"
                   name="cardNumber"
                   placeholder="0000000000000000"
-                  defaultValue={"1111111111111111"}
+                  defaultValue={'1111111111111111'}
                   maxLength={16}
-                  className="bg-[#2a3749] border-gray-700 pl-10 text-white placeholder-gray-400"
+                  className="border-gray-700 bg-[#2a3749] pl-10 text-white placeholder-gray-400"
                 />
 
-                <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <CreditCard className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label htmlFor="expiryDate" className="text-gray-300 block">
+                <label htmlFor="expiryDate" className="block text-gray-300">
                   Data de Expiração
                 </label>
-                
+
                 <Input
                   id="expiryDate"
                   name="expiryDate"
                   placeholder="MM/AA"
-                  defaultValue={"12/25"}
-                  className="bg-[#2a3749] border-gray-700 text-white placeholder-gray-400"
+                  defaultValue={'12/25'}
+                  className="border-gray-700 bg-[#2a3749] text-white placeholder-gray-400"
                 />
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="cvv" className="text-gray-300 block">
+                <label htmlFor="cvv" className="block text-gray-300">
                   CVV
                 </label>
 
@@ -94,14 +92,14 @@ export function InvoiceForm() {
                   id="cvv"
                   name="cvv"
                   placeholder="123"
-                    defaultValue={"123"}
-                  className="bg-[#2a3749] border-gray-700 text-white placeholder-gray-400"
+                  defaultValue={'123'}
+                  className="border-gray-700 bg-[#2a3749] text-white placeholder-gray-400"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="cardholderName" className="text-gray-300 block">
+              <label htmlFor="cardholderName" className="block text-gray-300">
                 Nome no Cartão
               </label>
 
@@ -109,8 +107,8 @@ export function InvoiceForm() {
                 id="cardholderName"
                 name="cardholderName"
                 placeholder="Como aparece no cartão"
-                defaultValue={"Nome Sobrenome"}
-                className="bg-[#2a3749] border-gray-700 text-white placeholder-gray-400"
+                defaultValue={'Nome Sobrenome'}
+                className="border-gray-700 bg-[#2a3749] text-white placeholder-gray-400"
               />
             </div>
           </div>
@@ -142,19 +140,12 @@ export function InvoiceForm() {
       </div> */}
 
       <div className="mt-6 flex justify-end gap-4">
-        <Button
-          type="button"
-          variant="outline"
-          className="bg-[#2a3749] border-gray-700"
-        >
+        <Button type="button" variant="outline" className="border-gray-700 bg-[#2a3749]">
           Cancelar
         </Button>
 
-        <Button
-          type="submit"
-          className="bg-indigo-600 hover:bg-indigo-700 text-white"
-        >
-          <CreditCard className="h-4 w-4 mr-2" />
+        <Button type="submit" className="bg-indigo-600 text-white hover:bg-indigo-700">
+          <CreditCard className="mr-2 h-4 w-4" />
           Processar Pagamento
         </Button>
       </div>

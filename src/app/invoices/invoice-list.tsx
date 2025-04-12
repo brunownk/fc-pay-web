@@ -1,32 +1,33 @@
-import Link from "next/link";
-import { cookies } from "next/headers";
-import { PlusIcon, Eye, Download } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { cookies } from 'next/headers';
+import Link from 'next/link';
+
+import { Download, Eye, PlusIcon } from 'lucide-react';
 
 // import { Input } from "@/components/ui/input"
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { StatusBadge } from "@/components/StatusBadge";
+import { StatusBadge } from '@/components/StatusBadge';
+import { Button } from '@/components/ui/button';
 
 type Invoice = {
   id: string;
   created_at: string;
   description: string;
   amount: number;
-  status: "approved" | "pending" | "rejected";
+  status: 'approved' | 'pending' | 'rejected';
 };
 
 export async function getInvoices() {
   const cookiesStore = await cookies();
-  const apiKey = cookiesStore.get("apiKey")?.value;
-  
-  const response = await fetch("http://localhost:8080/invoice", {
+  const apiKey = cookiesStore.get('apiKey')?.value;
+
+  const response = await fetch('http://localhost:8080/invoice', {
     headers: {
-      "X-API-Key": apiKey as string,
+      'X-API-Key': apiKey as string,
     },
     cache: 'force-cache',
     next: {
-      tags: [`accounts/${apiKey}/invoices`]
-    }
+      tags: [`accounts/${apiKey}/invoices`],
+    },
   });
 
   return response.json();
@@ -36,20 +37,15 @@ export async function InvoiceList() {
   const invoices = await getInvoices();
 
   return (
-    <div className="bg-[#1e293b] rounded-lg p-6 border border-gray-800">
-      <div className="flex justify-between items-center mb-4">
+    <div className="rounded-lg border border-gray-800 bg-[#1e293b] p-6">
+      <div className="mb-4 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white mb-1">Faturas</h1>
-          <p className="text-gray-400">
-            Gerencie suas faturas e acompanhe os pagamentos
-          </p>
+          <h1 className="mb-1 text-2xl font-bold text-white">Faturas</h1>
+          <p className="text-gray-400">Gerencie suas faturas e acompanhe os pagamentos</p>
         </div>
-        <Button
-          className="bg-indigo-600 hover:bg-indigo-700 text-white"
-          asChild
-        >
+        <Button className="bg-indigo-600 text-white hover:bg-indigo-700" asChild>
           <Link href="/invoices/create">
-            <PlusIcon className="h-4 w-4 mr-2" />
+            <PlusIcon className="mr-2 h-4 w-4" />
             Nova Fatura
           </Link>
         </Button>
@@ -110,42 +106,29 @@ export async function InvoiceList() {
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-800">
-              <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">
-                ID
-              </th>
-              <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">
-                DATA
-              </th>
-              <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">
-                DESCRIÇÃO
-              </th>
-              <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">
-                VALOR
-              </th>
-              <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">
-                STATUS
-              </th>
-              <th className="text-left py-3 px-4 text-gray-400 font-medium text-sm">
-                AÇÕES
-              </th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-gray-400">ID</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-gray-400">DATA</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-gray-400">DESCRIÇÃO</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-gray-400">VALOR</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-gray-400">STATUS</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-gray-400">AÇÕES</th>
             </tr>
           </thead>
           <tbody>
-
             {invoices.map((invoice: Invoice) => (
               <tr key={invoice.id} className="border-b border-gray-800">
-                <td className="py-4 px-4 text-white">{invoice.id}</td>
-                <td className="py-4 px-4 text-white">
+                <td className="px-4 py-4 text-white">{invoice.id}</td>
+                <td className="px-4 py-4 text-white">
                   {new Date(invoice.created_at).toLocaleDateString()}
                 </td>
-                <td className="py-4 px-4 text-white">{invoice.description}</td>
-                <td className="py-4 px-4 text-white">
-                  R$ {invoice.amount.toFixed(2).replace(".", ",")}
+                <td className="px-4 py-4 text-white">{invoice.description}</td>
+                <td className="px-4 py-4 text-white">
+                  R$ {invoice.amount.toFixed(2).replace('.', ',')}
                 </td>
-                <td className="py-4 px-4">
+                <td className="px-4 py-4">
                   <StatusBadge status={invoice.status} />
                 </td>
-                <td className="py-4 px-4">
+                <td className="px-4 py-4">
                   <div className="flex gap-2">
                     <Button
                       variant="ghost"
@@ -157,11 +140,7 @@ export async function InvoiceList() {
                         <Eye className="h-4 w-4 text-gray-400" />
                       </Link>
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 hover:bg-gray-700"
-                    >
+                    <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-gray-700">
                       <Download className="h-4 w-4 text-gray-400" />
                     </Button>
                   </div>
@@ -172,40 +151,22 @@ export async function InvoiceList() {
         </table>
       </div>
 
-      <div className="flex justify-between items-center mt-4">
-        <div className="text-sm text-gray-400">
-          Mostrando 1 - 3 de 50 resultados
-        </div>
+      <div className="mt-4 flex items-center justify-between">
+        <div className="text-sm text-gray-400">Mostrando 1 - 3 de 50 resultados</div>
         <div className="flex gap-1">
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-8 w-8 bg-[#2a3749] border-gray-700"
-          >
+          <Button variant="outline" size="icon" className="h-8 w-8 border-gray-700 bg-[#2a3749]">
             &lt;
           </Button>
           <Button size="sm" className="h-8 w-8 bg-indigo-600 text-white">
             1
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-8 w-8 bg-[#2a3749] border-gray-700"
-          >
+          <Button variant="outline" size="sm" className="h-8 w-8 border-gray-700 bg-[#2a3749]">
             2
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-8 w-8 bg-[#2a3749] border-gray-700"
-          >
+          <Button variant="outline" size="sm" className="h-8 w-8 border-gray-700 bg-[#2a3749]">
             3
           </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-8 w-8 bg-[#2a3749] border-gray-700"
-          >
+          <Button variant="outline" size="icon" className="h-8 w-8 border-gray-700 bg-[#2a3749]">
             &gt;
           </Button>
         </div>
