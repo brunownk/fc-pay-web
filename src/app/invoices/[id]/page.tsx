@@ -10,7 +10,7 @@ import { Card } from '@/components/ui/card';
 export async function getInvoice(id: string) {
   const cookiesStore = await cookies();
   const apiKey = cookiesStore.get('apiKey')?.value;
-  const response = await fetch(`http://localhost:8080/invoice/${id}`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoice/${id}`, {
     headers: {
       'X-API-Key': apiKey as string,
     },

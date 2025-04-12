@@ -15,10 +15,9 @@ export async function createInvoiceAction(formData: FormData) {
   const cvv = formData.get('cvv');
   const cardholderName = formData.get('cardholderName');
 
-  const response = await fetch('http://localhost:8080/invoice', {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoice`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
       'X-API-Key': apiKey as string,
     },
     body: JSON.stringify({
