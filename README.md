@@ -2,6 +2,23 @@
 
 A study project implementing a web interface for a payment gateway system, built with Next.js and TypeScript. Part of a microservices learning journey.
 
+## Navigation
+
+- [Main Repository](https://github.com/brunownk/fc-pay)
+- [Gateway Service](https://github.com/brunownk/fc-pay-gateway)
+- [Antifraud Service](https://github.com/brunownk/fc-pay-antifraud)
+
+## Topics
+
+- nextjs
+- typescript
+- react
+- payment-gateway
+- frontend
+- tailwindcss
+- study-project
+- microservices
+
 ## Features
 
 - Basic payment processing interface
