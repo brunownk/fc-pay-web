@@ -90,34 +90,56 @@ graph LR
 3. **Set up environment variables**
    ```bash
    cp .env.example .env
-   # Edit .env with your configurations
+   # The default environment variables are already configured for Docker
    ```
 
-4. **Start the development environment**
+4. **Start the service**
    ```bash
-   # Start the containers
    docker compose up -d
-
-   # Access the container shell
-   docker compose exec nextjs bash
-
-   # Start the development server
-   npm run dev
    ```
 
-### Docker Setup
+5. **Verify the service is running**
+   ```bash
+   docker compose ps
+   ```
+
+### Docker Network Configuration
+
+The web service connects to the `fc-pay-network` created by the gateway service. The network configuration includes:
+
+- Gateway API: `http://app:8080` (internal Docker network)
+- Web Interface: `http://localhost:3000` (host machine)
+
+### Service Dependencies
+
+The web service depends on:
+- The gateway service (for API communication)
+- Next.js 14 (for the web interface)
+
+### Health Checks
+
+You can verify the service is healthy by:
+
+1. **Web Interface**
+   ```bash
+   curl http://localhost:3000
+   ```
+
+2. **API Connection**
+   ```bash
+   curl http://localhost:3000/api/health
+   ```
+
+### Development Mode
+
+To run the service in development mode:
 
 ```bash
-# Make sure the gateway is running first
-cd ../fc-pay-gateway
-docker-compose up -d
-
-# Then start the web interface
-cd ../fc-pay-web
-docker compose up -d
-
 # Access the container shell
 docker compose exec nextjs bash
+
+# Install dependencies
+npm install
 
 # Start the development server
 npm run dev
