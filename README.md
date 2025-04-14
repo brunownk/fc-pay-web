@@ -93,14 +93,25 @@ graph LR
    # The default environment variables are already configured for Docker
    ```
 
-4. **Start the service**
+4. **Start the services**
    ```bash
-   docker compose up -d
+   docker-compose up -d
    ```
 
-5. **Verify the service is running**
+5. **Run the application inside the container**
    ```bash
-   docker compose ps
+   # Access the container shell
+   docker-compose exec nextjs bash
+
+   # Run the application
+   npm run dev
+   ```
+
+   The web interface will be available at `http://localhost:3000`.
+
+6. **Verify the service is running**
+   ```bash
+   docker-compose ps
    ```
 
 ### Docker Network Configuration
