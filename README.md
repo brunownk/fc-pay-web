@@ -1,100 +1,59 @@
-# Gateway de Pagamento - Frontend (Next.js)
+# FC Pay Web Interface
 
-Este é o frontend desenvolvido em Next.js, parte do projeto Gateway de Pagamento criado durante a [Imersão Full Stack & Full Cycle](https://imersao.fullcycle.com.br).
+A study project implementing a web interface for a payment gateway system, built with Next.js and TypeScript. Part of a microservices learning journey.
 
-## Aviso Importante
+## Features
 
-Este projeto foi desenvolvido exclusivamente para fins didáticos como parte da Imersão Full Stack & Full Cycle.
+- Basic payment processing interface
+- Simple transaction status updates
+- Basic account management
+- Responsive design with Tailwind CSS
 
-## Sobre o Projeto
+## Tech Stack
 
-O Gateway de Pagamento é um sistema distribuído composto por:
-- Frontend em Next.js (este repositório)
-- API Gateway em Go
-- Sistema de Antifraude em Nest.js
-- Apache Kafka para comunicação assíncrona
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Shadcn UI Components
 
-## Arquitetura da aplicação
-[Visualize a arquitetura completa aqui](https://link.excalidraw.com/readonly/Nrz6WjyTrn7IY8ZkrZHy)
+## Getting Started
 
-## Pré-requisitos
-
-- [Docker](https://www.docker.com/get-started)
-
-## Importante!
-
-⚠️ **É necessário executar primeiro o serviço go-gateway** antes deste projeto, pois este frontend utiliza a rede Docker criada pelo go-gateway.
-
-## Setup do Projeto
-
-1. Clone o repositório:
+1. Install dependencies:
 ```bash
-git clone https://github.com/devfullcycle/imersao22.git
-cd imersao22/next-frontend
+yarn install
 ```
 
-2. Verifique se o serviço go-gateway já está em execução
+2. Run development server:
+```bash
+yarn dev
+```
 
-3. Inicie os serviços com Docker Compose:
+3. Build for production:
+```bash
+yarn build
+```
+
+## Environment Variables
+
+Create a `.env.local` file with:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8080
+```
+
+## Docker
+
 ```bash
 docker-compose up -d
 ```
 
-4. Execute a aplicação dentro do container:
-```bash
-docker-compose exec nextjs bash
-npm run dev
-```
+## Study Focus
 
-O frontend estará disponível em `http://localhost:3000`.
+This project focuses on:
+- Next.js fundamentals
+- TypeScript integration
+- Basic microservices communication
+- Simple UI/UX patterns
 
-## Funcionalidades
+## License
 
-### Autenticação
-- Login via API Key gerada pelo sistema Gateway
-- Proteção de rotas via middleware
-
-### Gerenciamento de Faturas
-- Listagem de todas as faturas
-- Visualização detalhada de uma fatura específica
-- Criação de novas faturas (processamento de pagamento)
-- Visualização de status (aprovado, pendente, rejeitado)
-
-## Interface de Usuário
-
-O frontend possui 4 telas principais:
-
-1. **Login** - Entrada da API Key para autenticação
-2. **Listagem de Faturas** - Visão geral de todas as transações
-3. **Detalhes da Fatura** - Informações completas de uma transação
-4. **Criação de Fatura** - Formulário para processamento de um novo pagamento
-
-Todas as telas incluem uma barra de navegação superior que exibe "Full Cycle Gateway" e um botão de logout.
-
-## Integração com API Gateway
-
-O frontend se comunica com a API Gateway para:
-- Autenticação de usuários
-- Criação e listagem de faturas
-- Consulta de detalhes de faturas
-- Atualização de dados via revalidação de tags
-
-## Regras de Negócio
-
-- Transações acima de R$ 10.000 são automaticamente enviadas para análise e ficam com status "pendente"
-- Transações menores são processadas imediatamente
-- A interface mostra status diferenciados por cores: verde (aprovado), amarelo (pendente), vermelho (rejeitado)
-
-## Desenvolvimento
-
-Para desenvolvimento local, você pode editar os arquivos localmente - eles são montados como volume no container Docker, que atualiza automaticamente as mudanças.
-
-## Tecnologias Utilizadas
-
-- Next.js 15 com App Router
-- Tailwind CSS para estilização
-- TypeScript para tipagem estática
-- Server Components e Server Actions
-- Shadcn UI para componentes
-
-O projeto segue as melhores práticas de desenvolvimento React e Next.js, utilizando Server Components quando possível e Client Components quando necessário para interatividade.
+MIT
