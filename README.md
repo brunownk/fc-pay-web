@@ -87,19 +87,21 @@ graph LR
    cd fc-pay-web
    ```
 
-3. **Install dependencies**
+3. **Set up environment variables**
    ```bash
-   npm install
+   cp .env.example .env
+   # Edit .env with your configurations
    ```
 
-4. **Set up environment variables**
+4. **Start the development environment**
    ```bash
-   cp .env.example .env.local
-   # Edit .env.local with your configurations
-   ```
+   # Start the containers
+   docker compose up -d
 
-5. **Start development server**
-   ```bash
+   # Access the container shell
+   docker compose exec nextjs bash
+
+   # Start the development server
    npm run dev
    ```
 
@@ -112,7 +114,13 @@ docker-compose up -d
 
 # Then start the web interface
 cd ../fc-pay-web
-docker-compose up -d
+docker compose up -d
+
+# Access the container shell
+docker compose exec nextjs bash
+
+# Start the development server
+npm run dev
 ```
 
 ## Main Screens
