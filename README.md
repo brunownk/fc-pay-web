@@ -1,154 +1,76 @@
 # FC Pay Web Interface
 
-[![Next.js](https://img.shields.io/badge/Next.js-14.0.4-black.svg)](https://nextjs.org) [![TypeScript](https://img.shields.io/badge/TypeScript-5.3.3-blue.svg)](https://www.typescriptlang.org) [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3.6-38B2AC.svg)](https://tailwindcss.com) [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+A study project implementing a web interface for a payment gateway system, built with Next.js and TypeScript. Part of a microservices learning journey.
 
-A modern web interface for the FC Pay payment gateway system, built with Next.js and TypeScript. This project is part of a microservices architecture study, focusing on best practices and modern web development patterns.
+## Navigation
 
-## Table of Contents
+- [Main Repository](https://github.com/brunownk/fc-pay)
+- [Gateway Service](https://github.com/brunownk/fc-pay-gateway)
+- [Antifraud Service](https://github.com/brunownk/fc-pay-antifraud)
 
-- [Project Origin](#project-origin)
-- [Features](#features)
-- [Architecture](#architecture)
-- [Getting Started](#getting-started)
-- [Main Screens](#main-screens)
-- [Business Rules](#business-rules)
-- [Study Focus](#study-focus)
-- [Related Projects](#related-projects)
-- [License](#license)
+## Topics
 
-## Project Origin
-
-This project is an evolution of the [Payment Gateway Frontend](https://github.com/devfullcycle/imersao22/tree/main/next-frontend) developed during the Full Stack & Full Cycle Immersion course. 
-
-This project was created for educational purposes to:
-- Deepen my understanding of Next.js and modern React patterns
-- Explore and implement best practices in frontend development
-- Experiment with different architectural patterns
-- Add new features and improvements
-- Create a more production-ready version
-
-This is a personal learning journey to enhance my skills in frontend development, user experience, and modern web technologies.
+- nextjs
+- typescript
+- react
+- payment-gateway
+- frontend
+- tailwindcss
+- study-project
+- microservices
 
 ## Features
 
-| Feature | Description |
-|---------|-------------|
-| 🔐 Authentication | API key-based authentication system |
-| 💳 Payment Processing | Credit card payment processing interface |
-| 📊 Invoice Management | List, create and view invoice details |
-| 🎨 Modern UI | Clean and responsive design using Tailwind CSS |
-| 🔄 Real-time Updates | Server-side revalidation for data updates |
-| 📱 Responsive Design | Mobile-first approach for all screens |
+- Basic payment processing interface
+- Simple transaction status updates
+- Basic account management
+- Responsive design with Tailwind CSS
 
-## Architecture
+## Tech Stack
 
-### Tech Stack
-
-| Component | Technology |
-|-----------|------------|
-| Frontend | Next.js 14 |
-| UI Components | Shadcn UI |
-| Form Validation | Zod |
-
-### System Components
-
-```mermaid
-graph LR
-    A[Web Interface] --> B[Gateway Service]
-    B --> C[PostgreSQL]
-    B --> D[Kafka]
-    D --> E[Antifraud Service]
-    E --> D
-    D --> B
-```
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Shadcn UI Components
 
 ## Getting Started
 
-### Prerequisites
+1. Install dependencies:
+```bash
+yarn install
+```
 
-| Requirement | Version | Purpose |
-|-------------|---------|---------|
-| Node.js | 18.17+ | Runtime Environment |
-| Docker | Latest | Containerization |
-| Docker Compose | Latest | Service Orchestration |
-| Running Gateway Service | Required | Backend Integration |
+2. Run development server:
+```bash
+yarn dev
+```
 
-### Installation Steps
+3. Build for production:
+```bash
+yarn build
+```
 
-1. **Start the Gateway Service first**
-   ```bash
-   cd ../fc-pay-gateway
-   docker-compose up -d
-   ```
+## Environment Variables
 
-2. **Clone the repository**
-   ```bash
-   git clone https://github.com/brunownk/fc-pay-web.git
-   cd fc-pay-web
-   ```
+Create a `.env.local` file with:
+```env
+NEXT_PUBLIC_API_URL=http://app:8080
+```
 
-3. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-4. **Set up environment variables**
-   ```bash
-   cp .env.example .env.local
-   # Edit .env.local with your configurations
-   ```
-
-5. **Start development server**
-   ```bash
-   npm run dev
-   ```
-
-### Docker Setup
+## Docker
 
 ```bash
-# Make sure the gateway is running first
-cd ../fc-pay-gateway
-docker-compose up -d
-
-# Then start the web interface
-cd ../fc-pay-web
 docker-compose up -d
 ```
 
-## Main Screens
-
-| Screen | Description | Learning Focus |
-|--------|-------------|----------------|
-| 🔑 Login | API key authentication | Authentication Patterns |
-| 📋 Invoice List | Overview of all transactions | Data Fetching, State Management |
-| 📝 Invoice Details | Detailed transaction information | Component Composition |
-| ➕ Create Invoice | Payment processing form | Form Handling, Validation |
-
-## Business Rules
-
-| Rule | Description | Implementation Focus |
-|------|-------------|----------------------|
-| 💰 Amount Threshold | Transactions over $10,000 require manual review | Business Logic |
-| 🔄 Status Updates | Real-time status updates via revalidation | State Management |
-| 🎨 Status Colors | Green (approved), Yellow (pending), Red (rejected) | UI/UX Design |
-
 ## Study Focus
 
-| Topic | Description |
-|-------|-------------|
-| 🏗️ Next.js 14 | Testing new features and patterns, App Router, Server/Client Components |
-| 🔄 SSR/CSR | Understanding rendering strategies, Server-side vs Client-side rendering |
-| 🎨 UI/UX | Modern design patterns, User Experience, Responsive Design |
-| 📱 Mobile First | Cross-platform development, Responsive layouts, Touch interactions |
-
-## Related Projects
-
-| Project | Description | Learning Context |
-|---------|-------------|------------------|
-| [Main Repository](https://github.com/brunownk/fc-pay) | Core project repository | System Architecture |
-| [Gateway Service](https://github.com/brunownk/fc-pay-gateway) | Payment processing API | Backend Integration |
-| [Antifraud Service](https://github.com/brunownk/fc-pay-antifraud) | Fraud detection service | Microservices |
+This project focuses on:
+- Next.js fundamentals
+- TypeScript integration
+- Basic microservices communication
+- Simple UI/UX patterns
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT
