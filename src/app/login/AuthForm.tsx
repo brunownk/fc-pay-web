@@ -12,7 +12,7 @@ export async function loginAction(formData: FormData) {
   const apiKey = formData.get('apiKey');
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/accounts`, {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'X-API-Key': apiKey as string,
     },
