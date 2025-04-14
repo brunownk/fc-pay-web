@@ -7,9 +7,9 @@ services:
     volumes:
       - .:/home/node/app
     networks:
-      - fc-pay-network
+      - fc-pay-gateway_default
 
       
 networks:
-  fc-pay-network:
+  fc-pay-gateway_default:
     external: true
