@@ -68,93 +68,158 @@ graph LR
 
 | Requirement | Version | Purpose |
 |-------------|---------|---------|
-| Node.js | 18.17+ | Runtime Environment |
+| Node.js | 18+ | Runtime Environment |
 | Docker | Latest | Containerization |
 | Docker Compose | Latest | Service Orchestration |
-| Running Gateway Service | Required | Backend Integration |
+| FC Pay Gateway | Running | API & Transaction Processing |
+| FC Pay Antifraud | Running | Fraud Detection |
 
 ### Installation Steps
 
-1. **Start the Gateway Service first**
-   ```bash
-   cd ../fc-pay-gateway
-   docker-compose up -d
-   ```
-
-2. **Clone the repository**
+1. **Clone the repository**
    ```bash
    git clone https://github.com/brunownk/fc-pay-web.git
    cd fc-pay-web
    ```
 
-3. **Set up environment variables**
+2. **Configure environment**
    ```bash
    cp .env.example .env
    # The default environment variables are already configured for Docker
    ```
 
-4. **Start the services**
+3. **Verify Required Services**
+
+   > ⚠️ **Important**: Both Gateway and Antifraud services must be running and healthy before starting the Web interface.
+   > The Web interface depends on APIs and Kafka topics from both services.
+
+   ```bash
+   # Check Gateway health
+   curl http://localhost:8080/health
+   # Expected: {"status":"ok"}
+
+   # Check Antifraud health
+   curl http://localhost:3001/health
+   # Expected: {"status":"ok"}
+   ```
+
+4. **Start the service**
    ```bash
    docker-compose up -d
    ```
 
-5. **Run the application inside the container**
+5. **Verify service health**
    ```bash
-   # Access the container shell
-   docker-compose exec nextjs bash
+   # Check container status
+   docker-compose ps
+   # Expected: fc-pay-web-app-1 ... (healthy)
 
-   # Run the application
+   # Check service logs
+   docker-compose logs -f app
+   # Look for: "Server started" and "Connected to API"
+
+   # Access the web interface
+   open http://localhost:3000
+   ```
+
+### Features
+
+The Web interface provides:
+- Transaction dashboard
+- Real-time transaction monitoring
+- Fraud detection status
+- Account management
+- Transaction history
+- Analytics and reporting
+
+### Development
+
+For local development:
+
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Start in development mode**
+   ```bash
    npm run dev
    ```
 
-   The web interface will be available at `http://localhost:3000`.
-
-6. **Verify the service is running**
+3. **Build for production**
    ```bash
-   docker-compose ps
+   npm run build
+   npm start
    ```
 
-### Docker Network Configuration
+### Troubleshooting
 
-The web service connects to the `fc-pay-network` created by the gateway service. The network configuration includes:
-
-- Gateway API: `http://app:8080` (internal Docker network)
-- Web Interface: `http://localhost:3000` (host machine)
-
-### Service Dependencies
-
-The web service depends on:
-- The gateway service (for API communication)
-- Next.js 14 (for the web interface)
-
-### Health Checks
-
-You can verify the service is healthy by:
-
-1. **Web Interface**
+1. **API Connection Issues**
    ```bash
-   curl http://localhost:3000
+   # Check Gateway API
+   curl http://localhost:8080/health
+   
+   # Check Antifraud API
+   curl http://localhost:3001/health
    ```
 
-2. **API Connection**
-   ```bash
-   curl http://localhost:3000/api/health
-   ```
+2. **Common Error Messages**
 
-### Development Mode
+   - "Error: Cannot connect to Gateway API"
+     - Verify Gateway service is running
+     - Check network connectivity
+     - Ensure environment variables are correct
 
-To run the service in development mode:
+   - "Error: Cannot connect to Antifraud API"
+     - Verify Antifraud service is running
+     - Check network connectivity
+     - Ensure environment variables are correct
 
-```bash
-# Access the container shell
-docker compose exec nextjs bash
+   - "Error: Authentication failed"
+     - Check API credentials in .env file
+     - Verify token expiration
+     - Clear browser cache and cookies
 
-# Install dependencies
-npm install
+3. **UI Issues**
+   - Clear browser cache
+   - Check console for JavaScript errors
+   - Verify all required environment variables are set
+   - Check browser compatibility (latest Chrome/Firefox/Safari recommended)
 
-# Start the development server
-npm run dev
-```
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| PORT | Service port | 3000 |
+| GATEWAY_API_URL | Gateway service URL | http://localhost:8080 |
+| ANTIFRAUD_API_URL | Antifraud service URL | http://localhost:3001 |
+| NODE_ENV | Environment mode | development |
+
+### Browser Support
+
+The web interface is tested and supported on:
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+### Security Considerations
+
+1. **Authentication**
+   - Uses JWT tokens for API authentication
+   - Implements session management
+   - Supports role-based access control
+
+2. **Data Protection**
+   - All API calls use HTTPS in production
+   - Sensitive data is never stored in local storage
+   - Automatic session timeout
+
+3. **Best Practices**
+   - Regular security updates
+   - Input validation
+   - XSS protection
+   - CSRF protection
 
 ## Main Screens
 
